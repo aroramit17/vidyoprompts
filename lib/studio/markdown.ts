@@ -94,10 +94,14 @@ ${beats
 
 ${beats
   .map(
-    (b, i) => `## ${i + 1}. ${b.title}
-- **Entry state:** ${b.entryState}
-- **Exit state:** ${b.exitState}
-${b.components.map((c) => `- **${c.name}:** ${c.entry.size}, ${c.entry.color}, ${c.entry.content}, ${c.entry.position} → ${c.exit.size}, ${c.exit.color}, ${c.exit.content}, ${c.exit.position}`).join("\n")}${b.justification ? `\n- **Justification:** ${b.justification}` : ""}`,
+    (b, i) =>
+      [
+        `## ${i + 1}. ${b.title}`,
+        `- **Entry state:** ${b.entryState}`,
+        `- **Exit state:** ${b.exitState}`,
+        ...b.components.map((c) => `- **${c.name}:** ${c.entry.size}, ${c.entry.color}, ${c.entry.content}, ${c.entry.position} → ${c.exit.size}, ${c.exit.color}, ${c.exit.content}, ${c.exit.position}`),
+        ...(b.justification ? [`- **Justification:** ${b.justification}`] : []),
+      ].join("\n"),
   )
   .join("\n\n")}
 `;

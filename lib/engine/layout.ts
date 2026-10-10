@@ -62,9 +62,17 @@ function verticalLayer(layer: Layer): Layer {
 
   if (!layer.parent) {
     const zone = zoneOf(layer);
+    const visualWidth = (props.w ?? 100) * (props.scale ?? 1);
+    // Wide visuals (cards, screenshots) are centred in the narrow frame; their motion
+    // keeps its shape relative to the base position.
+    const wide = layer.type !== "text" && visualWidth >= SRC.width * 0.4;
+    const baseX = props.x ?? 0;
+    const centre = baseX + (0.5 - (props.anchorX ?? 0.5)) * (props.w ?? 100) * (props.scale ?? 1);
+    const k = wide ? Math.min(1, SAFE_VISUAL_WIDTH / visualWidth) : 1;
+    const xMap = (x: number) => (wide ? V.width / 2 + (x - centre) * k : mapX(x, zone));
     if (!overridden.has("x")) {
-      if (props.x !== undefined) props.x = mapX(props.x, zone);
-      tracks = tracks.map((t) => (t.prop === "x" ? mapTrack(t, (v) => mapX(v, zone)) : t));
+      if (props.x !== undefined) props.x = xMap(props.x);
+      tracks = tracks.map((t) => (t.prop === "x" ? mapTrack(t, xMap) : t));
     }
     if (!overridden.has("y")) {
       if (props.y !== undefined) props.y = mapY(props.y, zone);

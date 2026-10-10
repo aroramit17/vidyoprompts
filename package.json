@@ -9,7 +9,7 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "render": "tsx scripts/render.ts",
+    "render": "tsx --tsconfig tsconfig.json scripts/render.ts",
     "demo": "STUDIO_DIRECTOR=offline tsx --tsconfig tsconfig.json scripts/demo.ts"
   },
   "dependencies": {

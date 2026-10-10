@@ -193,6 +193,7 @@ export async function exportVideo(meta: ProjectMeta, film: Film, format: FormatI
   const out = projectPath(meta.id, "exports", file);
   await fs.mkdir(path.dirname(out), { recursive: true });
   const ffmpeg = spawn(
+    /*turbopackIgnore: true*/
     process.env.FFMPEG_PATH || "ffmpeg",
     [
       "-y",

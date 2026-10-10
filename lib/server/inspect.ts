@@ -21,8 +21,8 @@ function findChromium(): string | undefined {
       .reverse();
     for (const d of dirs) {
       for (const rel of ["chrome-linux/chrome", "chrome-linux64/chrome", "chrome-mac/Chromium.app/Contents/MacOS/Chromium", "chrome-win/chrome.exe"]) {
-        const p = path.join(root, d, rel);
-        if (existsSync(p)) return p;
+        const p = path.join(/*turbopackIgnore: true*/ root, d, rel);
+        if (existsSync(/*turbopackIgnore: true*/ p)) return p;
       }
     }
   }

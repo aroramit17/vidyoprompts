@@ -21,7 +21,7 @@ import path from "node:path";
 import type { Film } from "@/lib/engine";
 import type { Asset, Beat, Brief, ContactSheet, ExportInfo, FilmRevision, Flag, ProductionDoc, ProjectMeta, StyleGuide } from "@/lib/studio/types";
 
-export const DATA_DIR = path.resolve(process.env.STUDIO_DATA_DIR || path.join(process.cwd(), "data"));
+export const DATA_DIR = path.resolve(/*turbopackIgnore: true*/ process.env.STUDIO_DATA_DIR || path.join(process.cwd(), "data"));
 const PROJECTS = path.join(DATA_DIR, "projects");
 
 export class HttpError extends Error {
